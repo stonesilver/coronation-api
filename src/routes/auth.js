@@ -73,11 +73,14 @@ router.post('/login', async (req, res) => {
       ...others
     } = user;
 
-    originalPwd === password &&
+    if (originalPwd === password) {
       res.status(200).json({
         status: 'success',
         data: { ...others._doc, email, accessToken },
       });
+    } else {
+      res.status(400).json({ message: 'Email or password not correct' });
+    }
   } catch (err) {
     res.status(500).json({
       message: "We're working to fix the issue. Please try later",
