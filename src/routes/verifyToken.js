@@ -22,7 +22,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
     if (req.user.id === req.params.id || req.user.role !== 'user') {
       next();
     } else {
-      res.status(403).json({ message: 'UnAuthenticated' });
+      res.status(403).json({ message: 'Unauthenticated' });
     }
   });
 };
@@ -32,7 +32,7 @@ const verifyTokenAndIsAdmin = (req, res, next) => {
     if (req.user.role !== 'user') {
       next();
     } else {
-      res.status(403).json({ message: 'UnAuthenticated', err: req.user.role  });
+      res.status(403).json({ message: 'Unauthenticated', err: req.user.role  });
     }
   });
 };

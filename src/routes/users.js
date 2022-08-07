@@ -25,8 +25,13 @@ router.get('/find-me', verifyToken, async (req, res) => {
 router.get('/:id', verifyTokenAndIsAdmin, async (req, res) => {
   try {
     const result = await User.findById(req.params.id);
-    const { password, ...others } = result;
-    res.status(200).json({ status: 'successful', data: others._doc });
+
+    if (result._id) {
+      const { password, ...others } = result;
+      res.status(200).json({ status: 'successful', data: others._doc });
+    } else {
+      res.status(400).json({ message: 'User does not exist' });
+    }
   } catch (err) {
     res.status(500).json({
       message: "We're working on a fix. Please try later",
